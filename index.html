@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intervux - AI Mock Interview</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen active">
+            <div class="glass-card setup-card">
+                <div class="logo-area">
+                    <i class="fa-solid fa-microphone-lines logo-icon"></i>
+                    <h1>INTERVUX</h1>
+                </div>
+                <h2>Prepare for your next interview.</h2>
+                <p>Paste the job description below to generate tailored behavioral questions.</p>
+                
+                <div class="input-group">
+                    <label for="jd-input">Job Description / Role Details</label>
+                    <textarea id="jd-input" placeholder="e.g. Seeking a Senior Product Manager with experience in agile methodologies, cross-functional team leadership, and data-driven decision making..."></textarea>
+                </div>
+                
+                <button id="start-btn" class="primary-btn">
+                    <i class="fa-solid fa-video"></i> Start Interview Session
+                </button>
+            </div>
+            
+            <!-- Paywall Overlay (Hidden by default) -->
+            <div id="paywall-overlay" class="overlay hidden">
+                <div class="glass-card paywall-card">
+                    <h2>Ready for the Gauntlet?</h2>
+                    <p>You've completed your free trial session.</p>
+                    <div class="pricing-tier">
+                        <h3>Weekend Prep Pass</h3>
+                        <div class="price">$15</div>
+                        <ul>
+                            <li><i class="fa-solid fa-check"></i> 48 hours of unlimited sessions</li>
+                            <li><i class="fa-solid fa-check"></i> Unlimited JD context injections</li>
+                            <li><i class="fa-solid fa-check"></i> Full transcript & STAR export</li>
+                        </ul>
+                        <button class="upgrade-btn">Unlock Weekend Pass</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen hidden">
+            
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="logo-area small">
+                    <i class="fa-solid fa-microphone-lines logo-icon"></i>
+                    <h2>INTERVUX</h2>
+                </div>
+                <nav>
+                    <a href="#" class="nav-item active"><i class="fa-solid fa-video"></i> Interview</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i> Feedback</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> Profile</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="dashboard-main">
+                
+                <!-- Video Section -->
+                <section class="video-section">
+                    <div class="video-header">
+                        <h3>AI INTERVIEW SESSION</h3>
+                        <span class="status-badge live"><i class="fa-solid fa-circle"></i> LIVE</span>
+                    </div>
+                    
+                    <div class="video-container">
+                        <!-- Local webcam feed -->
+                        <video id="user-video" autoplay muted playsinline></video>
+                        <div class="video-overlay-text">CANDIDATE WEBCAM FEED</div>
+                        
+                        <div class="controls-bar glass-panel">
+                            <button id="mute-btn" class="control-btn"><i class="fa-solid fa-microphone"></i> Mute</button>
+                            <button id="camera-btn" class="control-btn"><i class="fa-solid fa-video-slash"></i> Camera Off</button>
+                            <button id="end-session-btn" class="control-btn danger"><i class="fa-solid fa-phone-slash"></i> End Interview</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feedback Section -->
+                <section class="feedback-section">
+                    
+                    <!-- Transcript -->
+                    <div class="glass-card transcript-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-wave-square"></i> INTERVIEW TRANSCRIPT</h3>
+                        </div>
+                        <div id="transcript-content" class="transcript-content">
+                            <!-- JS will populate this -->
+                            <div class="message ai-message">
+                                <strong>AI:</strong> Welcome to Intervux. Based on the job description you provided, let's start. Can you tell me about a time you had to lead a cross-functional team through a difficult pivot?
+                            </div>
+                            <div class="message user-message pending hidden">
+                                <strong>Me:</strong> <span id="live-transcript-text">Listening...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STAR Feedback -->
+                    <div class="glass-card star-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-star"></i> STAR METHOD FEEDBACK</h3>
+                        </div>
+                        <div class="star-grid">
+                            <div class="star-item" id="star-s">
+                                <h4><span class="letter">S</span> Situation</h4>
+                                <div class="progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                                <p class="feedback-text">Waiting for context...</p>
+                            </div>
+                            <div class="star-item" id="star-t">
+                                <h4><span class="letter">T</span> Task</h4>
+                                <div class="progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                                <p class="feedback-text">Waiting for goal definition...</p>
+                            </div>
+                            <div class="star-item" id="star-a">
+                                <h4><span class="letter">A</span> Action</h4>
+                                <div class="progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                                <p class="feedback-text">Waiting for specific steps...</p>
+                            </div>
+                            <div class="star-item" id="star-r">
+                                <h4><span class="letter">R</span> Result</h4>
+                                <div class="progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                                <p class="feedback-text">Waiting for measurable outcome...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </main>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
